@@ -1,0 +1,3 @@
+# HotelRating
+
+Hotel rating application
