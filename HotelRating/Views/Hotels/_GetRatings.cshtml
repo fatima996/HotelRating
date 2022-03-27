@@ -1,0 +1,29 @@
+﻿@model HotelRating.Models.Rating
+
+<table style="width: 100%; border= 1px solid black">
+	<tr>
+		<td>
+			@Model.Username
+		</td>
+	</tr>
+	<tr>
+		<td>@Model.Comment</td>
+
+	</tr>
+	<tr>
+		<td>
+			@for (var i =0; i <@Model.Rate; i++)
+			{
+			<span class="fa-solid fa-star"></span>
+
+			}
+
+			@for (var i =@Model.Rate; i <5; i++)
+			{
+			<span class="fa-regular fa-star"></span>
+
+			}
+		</td>
+	</tr>
+
+</table>

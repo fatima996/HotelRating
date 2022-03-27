@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Rating>
+
+<script type="text/javascript">
+	function RateOut(rating){
+		for(var i= 1; i <= rating; i++){
+			document.getElementById("star" + i).setAttribute('class', 'fa-regular fa-star');
+		}
+	}
+	function RateOver(rating){
+		for(var i= 1; i <= rating; i++){
+			document.getElementById("star" +i).setAttribute('class', 'fa-solid fa-star');
+		}
+	}
+		function RateClick(rating){
+			console.log("RATINR",rating)
+			document.getElementById('srating').value = rating;
+				for(var i= 1; i <= rating; i++){
+			document.getElementById("star" + i).setAttribute('class', 'fa-solid fa-star');
+		}
+		for(var i= rating +1 ; i <= 5; i++){
+			document.getElementById("star" + i).setAttribute('class', 'fa-regular fa-star');
+		}
+	}
+
+		
+		function rateSelected(){
+			var rating =document.getElementById('srating').value;
+			for(var i= 1; i <= rating; i++){
+			document.getElementById("star" + i).setAttribute('class', 'fa-solid fa-star');
+		}
+
+		function VerifyRate(){
+			var rating = document.getElementById('srating').value;
+			if (rating === 0 ||  document.getElementById('comment').value=== null){
+				alter("Please add rating and comment!!!");
+				return false
+
+			}
+			return true;
+		}
+	}
+</script>
+<h1>Rating show</h1>
+
+@foreach (Rating item in Model)
+{ 
+	@Html.Partial("_GetRatings", item)
+}
+<h3>Enter your comment: </h3>
+
+@using (Html.BeginForm("AddReview", "Hotels", FormMethod.Post, new { onsubmit = "return VerifyRate()" }))
+{
+	<textarea rows="6" cols="50" name="comment" id="hotelCommentTxt" required minlength="3"></textarea>
+	
+
+	<div onmouseout="rateSelected()">
+		<span id="star1" onmouseout="RateOut(1)" onmouseover="RateOver(1)" onclick="RateClick(1)" class="fa-regular fa-star"></span>
+		<span id="star2" onmouseout="RateOut(2)" onmouseover="RateOver(2)" onclick="RateClick(2)" class="fa-regular fa-star"></span>
+		<span id="star3" onmouseout="RateOut(3)" onmouseover="RateOver(3)" onclick="RateClick(3)" class="fa-regular fa-star"></span>
+		<span id="star4" onmouseout="RateOut(4)" onmouseover="RateOver(4)" onclick="RateClick(4)" class="fa-regular fa-star"></span>
+		<span id="star5" onmouseout="RateOut(5)" onmouseover="RateOver(5)" onclick="RateClick(5)" class="fa-regular fa-star"></span>
+	</div>
+	<div>
+		<input type="hidden" name="rating" id="srating" value="rating" />
+	</div>
+	<div>
+		<input type="hidden" name="HotelId" id="HotelId" value="@ViewBag.HotelId" />
+	</div>
+	<div>
+		<input type="submit" class="btn btn-primary active" name="saveComment" value="Save Review" />
+	</div>
+}
